@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vermont Home Search · Richmond + Milton · 500 ft+</title>
+<meta name="description" content="Single-family homes within 45 minutes of both Richmond and Milton, Vermont, above 500 ft elevation.">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Vermont Home Search <span class="sub">Richmond + Milton · 500 ft+</span></h1>
+    <p class="criteria">Single-family · 3+ beds · 1.5+ baths · 1+ garage · move-in condition · ≤45 min drive to <b>both</b> Richmond and Milton · above 500 ft elevation</p>
+    <p class="updated">Last updated <span id="updated">…</span> · refreshes daily around 7am ET</p>
+  </div>
+</header>
+<nav class="tabs wrap" role="tablist">
+  <button role="tab" data-tab="active" class="on">Active <span class="n" id="n-active"></span></button>
+  <button role="tab" data-tab="sold">Sold (12 mo) <span class="n" id="n-sold"></span></button>
+  <button role="tab" data-tab="near">Near misses <span class="n" id="n-near"></span></button>
+</nav>
+<main class="wrap">
+  <p class="tabnote" id="tabnote"></p>
+  <details class="filters" open>
+    <summary>Filters</summary>
+    <div class="grid">
+      <label>Min price <input type="number" id="pmin" step="25000" min="0" placeholder="Any"></label>
+      <label>Max price <input type="number" id="pmax" step="25000" min="0" placeholder="Any"></label>
+      <label>Min elevation (ft) <input type="number" id="emin" step="50" min="0" placeholder="500"></label>
+      <label>Max drive to Richmond (min) <input type="number" id="drmax" step="1" min="0" placeholder="Any"></label>
+      <label>Max drive to Milton (min) <input type="number" id="dmmax" step="1" min="0" placeholder="Any"></label>
+      <label>Town <select id="town"><option value="">All towns</option></select></label>
+      <label>Sort <select id="sort">
+        <option value="elev">Elevation (high → low)</option>
+        <option value="price">Price (low → high)</option>
+        <option value="price_d">Price (high → low)</option>
+        <option value="new">Newest</option>
+        <option value="drive">Drive (longer of the two)</option>
+      </select></label>
+      <label class="chk"><input type="checkbox" id="hideflag"> Hide flagged</label>
+      <div class="btns"><button id="reset" type="button">Reset</button></div>
+    </div>
+  </details>
+  <section class="stats" id="stats"></section>
+  <div class="layout">
+    <div id="map" aria-label="Map of listings"></div>
+    <section id="cards" class="cards"></section>
+  </div>
+</main>
+<footer class="wrap foot">
+  <h2>Method &amp; caveats</h2>
+  <ul>
+    <li><b>Listings:</b> Redfin public search results and listing pages (houses with 3+ beds, 1.5+ baths, 1+ garage) for Chittenden, Franklin, Lamoille, Washington, Grand Isle and Addison counties. Photos and links go to Redfin.</li>
+    <li><b>Drive times:</b> OSRM public router from Richmond and Milton villages. OSRM can run slightly fast versus real traffic, so homes at 42–48 min are flagged borderline. Homes at 45–48 min are on the Near misses tab (their condition wasn't checked).</li>
+    <li><b>Elevation:</b> USGS 3DEP (EPQS) at each listing's map coordinates, kept if above 500 ft.</li>
+    <li><b>Condition:</b> listing remarks were read; fixer-uppers, as-is, projects, unbuilt and multi-family homes were removed. Rows with vague wording, no remarks, or public-record mismatches (e.g. manufactured) are <span class="flag">flagged</span> rather than dropped.</li>
+    <li><b>Budget badges:</b> In budget ≤ $600K · Stretch $600–650K · Over &gt; $650K. The default view caps price at $650K; clear Max price to see everything.</li>
+    <li><b>Gaps:</b> Redfin returned 740 of 759 Chittenden County sales, so about 19 sold homes from the past year are missing. Data can lag Redfin by up to a day.</li>
+  </ul>
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="app.js"></script>
+</body>
+</html>
